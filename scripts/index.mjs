@@ -71,7 +71,7 @@ for(let i = 0; i < menuLinks.length; i++)
   anchor.innerText = Object.values(menuLinks[i])[0];
   topMenuEl.appendChild(anchor);
 }
-console.log();
+// console.log(topMenuEl);
 
 // DOM Manipulation (Part Two)------------------------------------------------------------------------------------------------------------------
 
@@ -160,18 +160,21 @@ subMenuEl.style.top = '0';
 
 // let topMenuLinks = topMenuEl.getElementsByTagName('a');
 // console.log(topMenuLinks);
-// for(let x = 0; x < topMenuLinks.length; x++)
-//   topMenuLinks[x].addEventListener("click",  function(evt) 
-// {
+
+// topMenuEl.addEventListener("click", function(evt){
+//   // console.log(evt);
+
 //   evt.preventDefault();
-//   // console.log(evt.target.tagName)
+
+//   // console.log(evt.target);
+//   // console.log(evt.target.tagName);
 //   if(evt.target.tagName !== 'A')
-//     return
+//     return;
 
 //   console.log(evt.target);
 // });
 //----------------------------------------------------------------------------------------------------------------------------------------------
-
+  
 //----------------------------------------------------------------------------------------------------------------------------------------------
 // Now that we have references to each of these links, and a registered event listener, we will want to add a toggled "active" state to each menu item, showing whether or not it is currently selected:
 //  ~ The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
@@ -180,27 +183,35 @@ subMenuEl.style.top = '0';
 
 // let topMenuLinks = topMenuEl.getElementsByTagName('a');
 // console.log(topMenuLinks);
-// for(let x = 0; x < topMenuLinks.length; x++)
-//   topMenuLinks[x].addEventListener("click",  function(evt) 
-// {
+
+// topMenuEl.addEventListener("click", function(evt){
+//   // console.log(evt);
+
 //   evt.preventDefault();
-//   // console.log(evt.target.tagName)
-//   if(evt.target.tagName !== 'A')
-//     return
+//   for(let aClass of topMenuLinks)
+//   {
+//     // console.log(aClass);
+//     aClass.classList.remove('active');
+//   }
 
 //   let hasActive = evt.target.classList.contains('active');
 //   // console.log(hasActive);
-  
+
 //   if(!hasActive)
 //   {
 //     evt.target.classList.add('active');
-//     subMenuEl.style.top = '100%';
+//     console.log(`Added active class`)
 //   }
 //   else
 //   {
 //     evt.target.classList.remove('active');
-//     subMenuEl.style.top = '0';
+//     console.log(`Removed active class.`)
 //   }
+
+//   // console.log(evt.target);
+//   // console.log(evt.target.tagName);
+//   if(evt.target.tagName !== 'A')
+//     return;
 
 //   console.log(evt.target);
 // });
@@ -215,35 +226,87 @@ subMenuEl.style.top = '0';
 
 let topMenuLinks = topMenuEl.getElementsByTagName('a');
 console.log(topMenuLinks);
-for(let x = 0; x < topMenuLinks.length; x++)
-  topMenuLinks[x].addEventListener("click",  function(evt) 
-{
+
+topMenuEl.addEventListener("click", function(evt){
+  // console.log(evt);
+
   evt.preventDefault();
-  // console.log(evt.target.tagName)
+  for(let aClass of topMenuLinks)
+  {
+    // console.log(aClass);
+    aClass.classList.remove('active');
+  }
+
   if(evt.target.tagName !== 'A')
-    return
+    return;
 
   let hasActive = evt.target.classList.contains('active');
+  let hasSubLinks = menuLinks;
   // console.log(hasActive);
-  
-  // console.log(menuLinks[1].subLinks);
-  // console.log(!evt.target.href);
+  console.log(topMenuEl);
+
   if(!hasActive)
   {
-    if(evt.target.subLinks)
-    {
-      evt.target.classList.add('active');
-      subMenuEl.style.top = '100%';
-    }
+    evt.target.classList.add('active');
+    console.log(`Added active class`);
+    subMenuEl.style.top = '100%';
   }
   else
   {
-    evt.target.classList.remove('active');
     subMenuEl.style.top = '0';
+    evt.target.classList.remove('active');
+    console.log(`Removed active class.`)
   }
+
+  // console.log(evt.target.subLinks);
+  // if(hasSubLinks)
+  // {
+  //   subMenuEl.style.top = '100%';
+  //   buildSubmenu(evt.target.subLinks);
+  // }
+  // else
+  //   subMenuEl.style.top = '0';
+
+  // console.log(evt.target);
+  // console.log(evt.target.tagName);
+
 
   console.log(evt.target);
 });
+
+// for(let x = 0; x < topMenuLinks.length; x++)
+//   topMenuLinks[x].addEventListener("click",  function(evt) 
+// {
+//   evt.preventDefault();
+//   // console.log(evt.target.tagName)
+//   if(evt.target.tagName !== 'A')
+//     return
+
+//   let hasActive = evt.target.classList.contains('active');
+//   // console.log(hasActive);
+  
+//   console.log(menuLinks[1]);
+//   // console.log(!evt.target.href);
+//   if(!hasActive)
+//   {
+//     // console.log(evt.target);
+//     // console.log(`Hi`);
+//     if(evt.target.subLinks)
+//     {
+//       evt.target.classList.add('active');
+//       subMenuEl.style.top = '100%';
+//     }
+//   }
+//   else
+//   {
+//     evt.target.classList.remove('active');
+//     subMenuEl.style.top = '0';
+//   }
+//   // console.log(evt.target.subLinks);
+//   // buildSubmenu(evt.target.subLinks);
+
+//   console.log(evt.target);
+// });
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 // The submenu needs to be dynamic based on the clicked link. To facilitate that, we will create a helper function called buildSubmenu that does the following:
@@ -254,3 +317,19 @@ for(let x = 0; x < topMenuLinks.length; x++)
 //    ~ Set the element's content to the value of the text property of the "link" object.
 //    ~ Append the new element to the subMenuEl.
 // Once you have created your helper function, include it in the event listener within the same logic that shows the submenu, remembering to pass the array of sub-links as an argument.
+
+function buildSubmenu(subLinksArr)
+{
+  // console.log(subLinksArr);
+  // console.log(subMenuEl);
+  subMenuEl = [];
+  // console.log(subMenuEl);
+
+  // for(let index = 0; index < subLinksArr.length; index++)
+  // {
+  //   let anr = document.createElement('a');
+  //   console.log(subLinksArr[index][href]);
+  //   anchor.href = subLinksArr[index][href];
+  // }
+}
+// console.log(buildSubmenu());
